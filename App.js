@@ -1,22 +1,14 @@
-import React, { useState } from 'react';
-import { Text, View } from 'react-native';
-import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import * as Font from 'expo-font';
+import React, { useState } from 'react';
 import { enableScreens } from 'react-native-screens';
-import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
 import MealsNavigator from './navigation/MealsNavigator';
-import mealsReducer from './store/reducers/meals';
+import store from './store/store';
 
 // optimize memory usage and performance by using native navigation components( UIViewController in IOS and FragmentActivity in Android)
 enableScreens();
-
-const rootReducer = combineReducers({
-  meals: mealsReducer
-});
-
-const store = createStore(rootReducer);
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -33,7 +25,7 @@ export default function App() {
       <AppLoading
         startAsync={fetchFonts}
         onFinish={() => setFontLoaded(true)}
-        onError={(err) => console.log(err)}
+        onError={err => console.log(err)}
       />
     );
   }
